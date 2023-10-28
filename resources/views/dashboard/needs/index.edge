@@ -1,0 +1,42 @@
+@layout('layouts.dashboard')
+
+@section('body')
+<div class="container mt-5">
+
+    <div class="col-md-8 m-auto">
+        <div class="d-flex justify-content-between">
+            <h1>Necesidades</h1>
+            <div class="">
+                <a href="{{ route('need.create') }}" class="btn btn-primary">Crear necesidad</a>
+
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @each(need in needs)
+                <tr>
+                    <th scope="row">{{ need.id }}</th>
+                    <td>{{ need.name }}</td>
+                    <td class="d-flex justify-content-end">
+                        <form action="{{ route('need.destroy', {id:need.id}) }}" method="post">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+
+                </tr>
+
+                @endeach
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+@endsection
