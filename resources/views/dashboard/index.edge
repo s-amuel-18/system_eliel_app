@@ -1,0 +1,25 @@
+@layout('layouts.dashboard')
+
+@section('body')
+<div class="container mt-5">
+
+    <form class="col-md-8 m-auto" action="{{ route('survey.post') }}" method="POST">
+
+        @each(need in needs)
+        <div class="d-flex justify-content-between mb-3">
+            <div>
+                <label for="" class="font-weight-bold">{{ need.name }}</label>
+            </div>
+            <div class="">
+                <input type="hidden" name="survey[{{ need.id }}][id]" value="{{ need.id }}">
+                <input type="number" class="form-control" placeholder="Cantidad" name="survey[{{ need.id }}][value]">
+            </div>
+        </div>
+        @endeach
+
+
+        <button type="submit" class="btn btn-primary ">Registrar</button>
+    </form>
+
+</div>
+@endsection
