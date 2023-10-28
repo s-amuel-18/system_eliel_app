@@ -11,4 +11,4 @@ services:
       POSTGRES_DB: ${PG_DB_NAME}
     container_name: system_of_control
     volumes:
-      - ./localDB:/var/lib/postgresql/data
+      - ./localbase:/var/lib/postgresql/data
