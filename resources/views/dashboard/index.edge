@@ -5,14 +5,14 @@
 
     <form class="col-md-8 m-auto" action="{{ route('survey.post') }}" method="POST">
 
-        @each(need in needs)
+        @each( (need, i) in needs)
         <div class="d-flex justify-content-between mb-3">
             <div>
                 <label for="" class="font-weight-bold">{{ need.name }}</label>
             </div>
             <div class="">
-                <input type="hidden" name="survey[{{ need.id }}][id]" value="{{ need.id }}">
-                <input type="number" class="form-control" placeholder="Cantidad" name="survey[{{ need.id }}][value]">
+                <input type="hidden" name="survey[{{i}}][id]" value="{{ need.id }}">
+                <input type="number" class="form-control" placeholder="Cantidad" name="survey[{{i}}][value]">
             </div>
         </div>
         @endeach

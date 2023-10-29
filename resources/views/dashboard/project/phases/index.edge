@@ -1,0 +1,142 @@
+@layout('layouts.dashboard')
+
+@section('body')
+<div class="container mt-5">
+
+    <div >
+        <div class="d-flex justify-content-between">
+            <h1>Fases proyecto "{{ project.name }}"</h1>
+            <div class="">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Crear fase</button>
+            </div>
+        </div>
+        
+
+        <div class="row">
+            @each(phase in project.phases)
+            <div class="col-md-4 p-2">
+                <div class="card" >
+                    <div class="card-body">
+                      <h5 class="card-title">{{ phase.name }}</h5>
+                      <p class="card-text">{{ phase.description }}</p>
+
+                      <div class="mb-1"><b>Fecha de inicio: </b> {{ phase.startDate.toFormat('dd/MM/yyyy') }}</div>
+                      <div class="mb-1"><b>Fecha de finalización: </b> {{ phase.finishDate.toFormat('dd/MM/yyyy') }}</div>
+                      <div class="mb-1"><b>Status: </b> {{ phase.statusValue()?.value }}</div>
+                      <div class="mb-1"><b>Área: </b>{{ phase?.area?.name }}</div>
+                      <div class="mb-1"><b>Cantidad involucrados: {{phase?.involved.length}}</b></div>
+
+                      <div class="mt-3 d-flex flez-wrap" style="gap:5px;">
+                          
+                            <a href="{{ route('phase.supervised', { phaseId: phase.id }) }}" class="btn {{ phase.superviced ? 'btn-primary': 'btn-outline-primary' }} ">
+                                {{ !phase.superviced ? 'Fiscalizar': 'Desfiscalizar' }}
+                            </a>
+                          
+                          <form  action="{{ route('phase.destroy', { phaseId: phase.id, id: project.id}) }}" method="post">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            @endeach
+        </div>
+        
+    </div>
+
+
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nuevo proyecto</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            
+            <form action="{{ route('phase.store', { id: project.id }) }}" method="POST">
+
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="">Nombre proyecto</label>
+                        <input type="text" name="name" placeholder="Nombre proyecto" class="form-control">
+                    </div>
+    
+                    <div class="col-md-6 form-group">
+                        <label for="">Presupuesto general</label>
+                        <input type="number" min="1" name="budget" placeholder="Presupuesto general" class="form-control">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="">Fecha de inicio</label>
+                        <input type="date"  name="startDate" placeholder="Fecha de inicio" class="form-control">
+                    </div>
+    
+                    <div class="col-md-6 form-group">
+                        <label for="">Fecha de finalización</label>
+                        <input type="date"  name="finishDate" placeholder="Fecha de finalización" class="form-control">
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <label for="">Estatus</label>
+                        <select name="status" class="form-control">
+                            <option value="">Seleccionar estatus</option>
+                            
+                            @each(status in phaseStatus)
+                            <option value="{{ status.id }}">{{ status.value }}</option>
+                              
+                            @endeach
+                        </select>
+                    </div>
+    
+                    <div class="col-md-6 form-group">
+                        <label for="">Area</label>
+                        <select name="areaId" class="form-control">
+                            <option value="">Seleccionar area</option>
+                            
+                            @each(area in areas)
+                            <option value="{{ area.id }}">{{ area.name }}</option>
+                              
+                            @endeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Descripción</label>
+                    <textarea class="form-control" name="description"  rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="">Involucrados</label>
+                    @each( (involved, i) in involveds)
+                    <div class="d-flex justify-content-between mb-2">
+                        <div>
+                            <input type="checkbox" name="involveds[{{ i }}][id]" id="{{ involved.id }}" value="{{ involved.id }}">
+                            <label for="{{involved.id}}">{{ involved.name }} {{ involved.surname }} </label>
+                        </div>
+                        <div >
+                            <input type="text" class="form-control" name="involveds[{{ i }}][labour]" placeholder="Labor">
+                        </div>
+                    </div>
+                      
+                    @endeach
+                </div>
+
+                
+                
+                <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+</div>
+@endsection

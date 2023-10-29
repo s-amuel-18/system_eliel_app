@@ -12,11 +12,11 @@ export default class extends BaseSeeder {
     });
 
     await Person.create({
-      name: "dsada",
+      name: "Samuel",
       userId: user.id,
-      surname: "dsada",
-      phoneNumber: "dsada",
-      address: "dsada",
+      surname: "Graterol",
+      phoneNumber: "+584242805116",
+      address: "Dirección",
     });
   }
 }

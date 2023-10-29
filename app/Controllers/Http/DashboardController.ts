@@ -8,7 +8,7 @@ export default class DashboardController {
 
     const needs = await Need.all();
 
-    return view.render("dashboard.index", {
+    return view.render("dashboard/index", {
       needs,
     });
   }
@@ -16,7 +16,7 @@ export default class DashboardController {
   public async survey({ request, view }: HttpContextContract) {
     const { survey } = request.body();
     const needs = await Need.all();
-
+    console.log(survey);
     const totalSurvey = survey.map((s) => s.value).reduce((a, b) => +a + +b);
     const stadistics = needs
       .map((need) => {
@@ -28,7 +28,7 @@ export default class DashboardController {
       })
       .sort((a, b) => b.percentage - a.percentage);
 
-    return view.render("dashboard.stadistic", {
+    return view.render("dashboard/stadistic", {
       stadistics,
     });
   }

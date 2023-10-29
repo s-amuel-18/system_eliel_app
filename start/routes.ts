@@ -33,6 +33,18 @@ Route.post("/necesidades/crear", "NeedsController.store").as("need.store");
 Route.post("/necesidades/:id/delete", "NeedsController.destroy").as(
   "need.destroy",
 );
-// Route.get("/", async ({ view }) => {
-//   return view.render("welcome");
-// });
+
+Route.get("/usuarios/", "UsersController.index").as("user.index");
+Route.post("/usuarios/", "UsersController.store").as("user.store");
+Route.post("/usuarios/:id/delete", "UsersController.destroy").as("user.delete");
+
+Route.get("/proyectos", "ProjectsController.index").as("project.index");
+Route.post("/proyectos", "ProjectsController.store").as("project.store");
+Route.post("/proyectos/:id/delete", "ProjectsController.destroy").as("project.destroy");
+
+Route.get("/proyectos/:id/fases/", "PhasesController.index").as("phase.index");
+Route.post("/proyectos/:id/fases/", "PhasesController.store").as("phase.store");
+Route.post("/proyectos/:id/fases/:phaseId/delete", "PhasesController.destroy").as("phase.destroy");
+Route.get("/proyectos/fases/:phaseId/fiscalizar", "PhasesController.supervised").as("phase.supervised");
+Route.post("/proyectos/:id/fases/:phaseId/fiscalizar", "PhasesController.supervisedStore").as("phase.supervisedStore");
+

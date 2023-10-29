@@ -1,0 +1,83 @@
+@layout('layouts.dashboard')
+
+@section('body')
+<div class="container mt-5">
+
+    <div >
+        <div class="d-flex justify-content-between">
+            <h1>Proyectos</h1>
+            <div class="">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Crear proyecto</button>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Presupuesto</th>
+                    <th scope="col">Fases</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                @each(project in projects)
+                <tr>
+                    <th>{{project.name}}</th>
+                    <th>{{project.budget}}</th>
+                    <th>{{project.phases.length}}</th>
+                    
+                    
+                    <td class="d-flex justify-content-end" style="gap: 5px;">
+                        <a href="{{ route('phase.index', { id: project.id  }) }}" class="btn btn-success">Gestionar fase</a>
+                        
+                        <form action="{{ route('project.destroy', { id: project.id }) }}" method="post">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+
+                </tr>
+                @endeach
+                
+                
+            </tbody>
+        </table>
+    </div>
+
+
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nuevo proyecto</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            
+            <form action="{{ route('project.store') }}" method="POST">
+
+                <div class="form-group">
+                    <label for="">Nombre proyecto</label>
+                    <input type="text" name="name" placeholder="Nombre proyecto" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Presupuesto general</label>
+                    <input type="number" min="1" name="budget" placeholder="Presupuesto general" class="form-control">
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+</div>
+@endsection

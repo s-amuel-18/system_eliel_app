@@ -1,0 +1,40 @@
+@layout('layouts.dashboard')
+
+@section('body')
+<div class="container mt-5">
+
+    <div >
+        <div class="col-md-6 m-auto">
+            <h1>Fiscalización "{{ phase.name }}"</h1>
+            
+            <form method="POST" action="{{ route('phase.supervisedStore', { id: phase.project.id, phaseId: phase.id } ) }}">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="" >Nombre del fiscal</label>
+                        <input type="text" class="form-control" placeholder="Nombre del fiscal" name="createdBy">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="" >Cedula</label>
+                        <input name="numberCi" type="text" class="form-control" placeholder="Cedula">
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label for="" >Descripción</label>
+                        <textarea name="description" rows="4" class="form-control"></textarea>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Fiscalizar</button>
+            </form>
+        </div>
+        
+
+        
+        
+    </div>
+
+
+
+  
+
+</div>
+@endsection

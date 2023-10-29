@@ -1,0 +1,103 @@
+@layout('layouts.dashboard')
+
+@section('body')
+<div class="container mt-5">
+
+    <div class="">
+        <div class="d-flex justify-content-between">
+            <h1>Usuarios</h1>
+            <div class="">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Crear usuario</button>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Correo electrónico</th>
+                    <th scope="col">Numero de telefono</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+                @each(user in users)
+                <tr>
+                    <th>{{ user.person.name }}</th>
+                    <td>{{ user.person.surname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.person.phoneNumber }}</td>
+                    <td>{{ user.person.address }}</td>
+                    <td class="d-flex justify-content-end">
+                        <form action="{{ route('user.delete', {id: user.id}) }}" method="post">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+
+                </tr>
+                @endeach
+                
+            </tbody>
+        </table>
+    </div>
+
+
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nuevo usuario</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            
+            <form action="{{ route('user.store') }}" method="POST">
+
+                <div class="form-group">
+                    <label for="">Nombre</label>
+                    <input type="text" name="name" placeholder="Nombre" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Apellido</label>
+                    <input type="text" name="surname" placeholder="Apellido" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Correo electrónico</label>
+                    <input type="text" name="email" placeholder="Correo electrónico" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Numero telefónico</label>
+                    <input type="text" name="phoneNumber" placeholder="Numero telefónico" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Dirección</label>
+                    <input type="text" name="address" placeholder="Dirección" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="">Contraseña</label>
+                    <input type="password" name="password" placeholder="Contraseña" class="form-control">
+                </div>
+                
+
+                <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+</div>
+@endsection

@@ -7,7 +7,7 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments("id");
       table.integer("user_id").unsigned().references("users.id");
-      table.string("name");
+      table.string("name", 250);
       table.float("budget");
 
       table.timestamp("created_at", { useTz: true });
