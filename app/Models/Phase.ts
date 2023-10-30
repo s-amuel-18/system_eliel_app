@@ -1,58 +1,65 @@
-import { DateTime } from 'luxon'
-import { manyToMany, BaseModel, belongsTo, column, HasOne, hasOne } from '@ioc:Adonis/Lucid/Orm'
-import Project from './Project'
-import Area from './Area'
-import Involved from './Involved'
-import PhaseSupervised from './PhaseSupervised'
+import { DateTime } from "luxon";
+import {
+  manyToMany,
+  BaseModel,
+  belongsTo,
+  column,
+  HasOne,
+  hasOne,
+} from "@ioc:Adonis/Lucid/Orm";
+import Project from "./Project";
+import Area from "./Area";
+import Involved from "./Involved";
+import PhaseSupervised from "./PhaseSupervised";
 
 export default class Phase extends BaseModel {
   @column({ isPrimary: true })
-  public id: number
+  public id: number;
 
   @column()
-  public projectId: number
+  public projectId: number;
 
   @column()
-  public areaId: number
+  public areaId: number;
 
   @column()
-  public name: string
+  public name: string;
 
   @column()
-  public description: string
+  public description: string;
 
   @column()
-  public budget: number
+  public budget: number;
 
   @column.dateTime()
-  public startDate: DateTime
+  public startDate: DateTime;
 
   @column.dateTime()
-  public finishDate: DateTime
+  public finishDate: DateTime;
 
   @column()
-  public status: number
+  public status: number;
 
   @column()
-  public isSupervised: boolean
+  public isSupervised: boolean;
 
   @column.dateTime({ autoCreate: true })
-  public createdAt: DateTime
+  public createdAt: DateTime;
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updatedAt: DateTime
+  public updatedAt: DateTime;
 
-  @hasOne(() => PhaseSupervised, { foreignKey: "phase_id", localKey: "id" })
-  public superviced: HasOne<typeof PhaseSupervised>
+  @hasOne(() => PhaseSupervised, { foreignKey: "phaseId", localKey: "id" })
+  public superviced: HasOne<typeof PhaseSupervised>;
 
   @belongsTo(() => Project)
-  public project: BelongsTo<typeof Project>
+  public project: BelongsTo<typeof Project>;
 
   @belongsTo(() => Area)
-  public area: BelongsTo<typeof Area>
+  public area: BelongsTo<typeof Area>;
 
   @manyToMany(() => Involved)
-  public involved: ManyToMany<typeof Involved>
+  public involved: ManyToMany<typeof Involved>;
 
   static get statusPhases() {
     return [
@@ -60,11 +67,12 @@ export default class Phase extends BaseModel {
       { id: 2, value: "En proceso" },
       { id: 3, value: "Culminado" },
       { id: 4, value: "Cancelado" },
-    ]
+    ];
   }
 
-
   statusValue() {
-    return this.status ? Phase.statusPhases.find(s => s.id == this.status) : null
+    return this.status
+      ? Phase.statusPhases.find((s) => s.id == this.status)
+      : null;
   }
 }
